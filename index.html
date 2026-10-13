@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smart Student Attendance</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<div id="login" hidden><form id="lf"><h2>Instructor sign in</h2><input id="em" type="email" placeholder="Email" required><input id="pw" type="password" placeholder="Password" required><button class="btn">Sign in</button><p id="lerr" class="err"></p></form></div>
+<div id="app" hidden>
+<aside id="side"><h1>Attendance</h1><nav>
+<button data-v="dashboard">Dashboard</button><button data-v="students">Students</button><button data-v="attendance">Take attendance</button><button data-v="history">Student history</button><button data-v="reports">Reports</button><button data-v="settings">Settings</button></nav><div id="mode"></div></aside>
+<main>
+<header><button id="menu" aria-label="Menu">☰</button><h2 id="title"></h2>
+<select id="dept" aria-label="Department"><option value="CYB">CYBERSECURITY</option><option value="IT">INFORMATION TECHNOLOGY</option></select></header>
+<div id="banner"></div><div id="msg" role="status"></div>
+
+<section id="v-dashboard"><div id="cards" class="cards"></div>
+<div class="grid"><div class="card"><h3>Present vs absent (selected date)</h3><canvas id="c1"></canvas></div>
+<div class="card"><h3>Department attendance %</h3><canvas id="c2"></canvas></div>
+<div class="card wide"><h3>Attendance trend</h3><canvas id="c3"></canvas></div>
+<div class="card wide"><h3>Most absences</h3><canvas id="c4"></canvas></div></div></section>
+
+<section id="v-students"><div class="bar"><input id="sq" placeholder="Search students"><button class="btn" id="addS">Add student</button>
+<label class="btn alt">Import Excel<input id="xf" type="file" accept=".xlsx,.xls" hidden></label><button class="btn alt" id="tpl">Download template</button></div>
+<div class="card"><table><thead><tr><th>#</th><th>ID</th><th>Name</th><th></th></tr></thead><tbody id="stb"></tbody></table></div></section>
+
+<section id="v-attendance"><div class="bar"><input id="dt" type="date"><input id="aq" placeholder="Search"><span id="st" class="pill"></span></div>
+<div class="bar"><button class="btn" id="save">Save attendance</button><button class="btn alt" id="allP">Mark all present</button><button class="btn alt" id="allA">Mark all absent</button><button class="btn alt" id="rst">Reset changes</button></div>
+<div id="astats" class="cards"></div><div id="rdates" class="chips"></div>
+<div class="card"><table><thead><tr><th>#</th><th>ID</th><th>Name</th><th>Present</th></tr></thead><tbody id="atb"></tbody></table></div></section>
+
+<section id="v-history"><div class="bar"><select id="hs"></select><input id="hm" type="month"></div><div id="hinfo" class="cards"></div><div class="card"><div id="cal" class="cal"></div></div></section>
+
+<section id="v-reports"><div class="bar"><select id="rd"><option value="ALL">Both departments</option><option value="CYB">CYBERSECURITY</option><option value="IT">INFORMATION TECHNOLOGY</option></select>
+<input id="rf" type="date"><input id="rt" type="date"><button class="btn" id="rg">Generate</button><button class="btn alt" id="rx">Excel</button><button class="btn alt" id="rc">CSV</button><button class="btn alt" id="rp">Print / PDF</button></div>
+<div class="card" id="rout"></div></section>
+
+<section id="v-settings"><div class="card"><h3>Appearance</h3><button class="btn alt" id="theme">Toggle dark / light</button></div>
+<div class="card" id="setdata"></div></section>
+</main></div>
+<dialog id="dlg"></dialog>
+<script type="module" src="js/app.js"></script>
+</body></html>
